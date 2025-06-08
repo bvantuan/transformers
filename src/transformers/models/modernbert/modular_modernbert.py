@@ -585,7 +585,8 @@ def flash_attention_forward(
             deterministic=module.deterministic_flash_attn,
             window_size=local_attention,
         )
-    return (attn.view(bs, dim),)
+    # return (attn.view(bs, dim),)
+    return attn
 
 
 def sdpa_attention_forward(
