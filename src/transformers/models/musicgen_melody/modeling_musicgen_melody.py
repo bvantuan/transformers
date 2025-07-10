@@ -154,7 +154,7 @@ class MusicgenMelodySinusoidalPositionalEmbedding(nn.Module):
         position_ids = (torch.arange(seq_len) + past_key_values_length).to(inputs_embeds.device)
         # expand embeddings if needed
         if seq_len > self.weights.size(0):
-            self.make_weights(seq_len + self.offset, self.embedding_dim)
+            self.make_weights(seq_len, self.embedding_dim)
         return self.weights.index_select(0, position_ids.view(-1)).detach()
 
 
@@ -401,6 +401,7 @@ class MusicgenMelodyPreTrainedModel(PreTrainedModel):
     supports_gradient_checkpointing = True
     _no_split_modules = ["MusicgenMelodyDecoderLayer", "MusicgenMelodyAttention"]
     _supports_flash_attn_2 = True
+    _supports_flash_attn_3 = True
     _supports_sdpa = True
     _supports_flex_attn = True
 
@@ -1274,6 +1275,7 @@ class MusicgenMelodyForConditionalGeneration(PreTrainedModel, GenerationMixin):
     main_input_name = "input_ids"
     supports_gradient_checkpointing = True
     _supports_flash_attn_2 = True
+    _supports_flash_attn_3 = True
     _supports_sdpa = True
     _supports_flex_attn = True
 
